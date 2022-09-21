@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url="https://my-memories12.herokuapp.com/posts";
+const url="https://my-memories12.herokuapp.com";
 const API =axios.create({baseURL:url});
 
 API.interceptors.request.use((req)=>{
