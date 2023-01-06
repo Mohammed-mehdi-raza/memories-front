@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url="https://my-memories12.herokuapp.com";
+const url="https://memories-back.onrender.com/";
 const API =axios.create({baseURL:url});
 
 API.interceptors.request.use((req)=>{
