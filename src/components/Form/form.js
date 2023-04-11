@@ -5,11 +5,13 @@ import FileBase from 'react-file-base64';
 import {useState,useEffect} from 'react';
 import {useDispatch,useSelector} from 'react-redux';
 import {createPosts,updatePost} from '../../actions/posts.js';
+import {useNavigate} from "react-router-dom";
 
 const Form=({currentId ,setCurrentId})=>{
-  const post =useSelector((state)=>currentId?state.posts.find((p)=> p._id===currentId):null);
+  const post =useSelector((state)=>currentId?state.posts.posts.find((p)=> p._id===currentId):null);
   const classes=useStyles();
   const dispatch=useDispatch();
+  const navigate=useNavigate();
   const [postData,setPostData]=useState({
     title:'',message:'',tags:'',selectedFile:''
   });
@@ -22,11 +24,12 @@ const Form=({currentId ,setCurrentId})=>{
   
   const handleSubmit=(e)=>{
     e.preventDefault();
-    if(currentId===0)
+    if(currentId!==null)
       dispatch(updatePost(currentId,{...postData,name:user&&user.result&&user.result.name}));
     else
       dispatch(createPosts({...postData,name:user&&user.result&&user.result.name}));
     clear();
+    navigate(0);
   }
   
   const clear=()=>{
@@ -47,7 +50,7 @@ const Form=({currentId ,setCurrentId})=>{
   }
   
   return(
-     <Paper className={classes.paper}>
+     <Paper className={classes.paper} elevation={6}>
        <form className={`${classes.root} ${classes.form}`} noValidate autoComplete="off" onSubmit={handleSubmit}>
          <Typography variant="h6">Creating a Memory</Typography>
          <TextField variant="outlined" label="title" name="title" fullWidth value={postData.title} onChange={(e)=>setPostData({...postData,title:e.target.value})} required/>

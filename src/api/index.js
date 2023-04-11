@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const url="https://memories-back.onrender.com/";
+// const url="http://localhost:5000/";
 const API =axios.create({baseURL:url});
 
 API.interceptors.request.use((req)=>{
@@ -10,7 +11,9 @@ API.interceptors.request.use((req)=>{
     return req;
 })
 
-export const fetchPosts=()=>API.get('/posts');
+export const fetchPosts=(page)=>API.get(`/posts?page=${page}`);
+export const fetchPost=(id)=>API.get(`/posts/${id}`);
+export const fetchPostsBySearch=(searchQuery)=>API.get(`/posts/search?searchQuery=${searchQuery.search || "none" }&tags=${searchQuery.tags}`);
 export const createPosts=(newPost)=>API.post('/posts',newPost);
 export const updatePost=(id,post)=>API.patch(`/posts/${id}`,post);
 export const deletePost=(id)=>API.delete(`/posts/${id}`);
